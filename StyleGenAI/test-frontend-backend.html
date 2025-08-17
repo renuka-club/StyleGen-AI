@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Frontend-Backend Connection Test</title>
+</head>
+<body>
+    <h1>StyleGen AI Connection Test</h1>
+    <div id="status">Testing connection...</div>
+    <div id="result"></div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:5002/api';
+        
+        async function testConnection() {
+            const statusDiv = document.getElementById('status');
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                // Test 1: Health check
+                statusDiv.innerHTML = 'Testing health endpoint...';
+                const healthResponse = await fetch(`${API_BASE_URL}/health`);
+                const healthData = await healthResponse.json();
+                
+                if (healthData.status === 'OK') {
+                    statusDiv.innerHTML = '✅ Health check passed!';
+                } else {
+                    throw new Error('Health check failed');
+                }
+                
+                // Test 2: Connection test
+                statusDiv.innerHTML = 'Testing connection endpoint...';
+                const testResponse = await fetch(`${API_BASE_URL}/test`);
+                const testData = await testResponse.json();
+                
+                if (testData.success) {
+                    statusDiv.innerHTML = '✅ Connection test passed!';
+                } else {
+                    throw new Error('Connection test failed');
+                }
+                
+                // Test 3: Design generation
+                statusDiv.innerHTML = 'Testing design generation...';
+                const designResponse = await fetch(`${API_BASE_URL}/designs/generate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        gender: 'female',
+                        occasion: 'casual',
+                        style: 'modern',
+                        colors: ['blue', 'white'],
+                        patterns: ['solid'],
+                        materials: ['cotton'],
+                        mood: 'confident',
+                        season: 'summer'
+                    })
+                });
+                
+                const designData = await designResponse.json();
+                
+                if (designData.success) {
+                    statusDiv.innerHTML = '✅ All tests passed! Backend is working perfectly.';
+                    resultDiv.innerHTML = `
+                        <h3>Test Results:</h3>
+                        <p><strong>Health:</strong> ${healthData.message}</p>
+                        <p><strong>Connection:</strong> ${testData.message}</p>
+                        <p><strong>Design Generated:</strong> ${designData.design.title}</p>
+                        <p><strong>Design ID:</strong> ${designData.design.id}</p>
+                        <p><strong>Status:</strong> ${designData.design.status}</p>
+                    `;
+                } else {
+                    throw new Error(`Design generation failed: ${designData.error}`);
+                }
+                
+            } catch (error) {
+                statusDiv.innerHTML = `❌ Test failed: ${error.message}`;
+                resultDiv.innerHTML = `<p style="color: red;">Error details: ${error}</p>`;
+                console.error('Connection test failed:', error);
+            }
+        }
+        
+        // Run test when page loads
+        testConnection();
+    </script>
+</body>
+</html>
