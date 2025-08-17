@@ -1,0 +1,40 @@
+{
+  "name": "stylegen-ai-backend",
+  "version": "1.0.0",
+  "description": "Backend API for StyleGen AI - AI-powered fashion design platform",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fashion",
+    "ai",
+    "design",
+    "dalle",
+    "express",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
+    "@tailwindcss/vite": "^4.1.11",
+    "axios": "^1.10.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^4.21.2",
+    "firebase-admin": "^13.4.0",
+    "helmet": "^8.1.0",
+    "lucide-react": "^0.525.0",
+    "mongoose": "^8.16.2",
+    "morgan": "^1.10.0",
+    "multer": "^2.0.1",
+    "openai": "^5.8.3",
+    "replicate": "^1.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
